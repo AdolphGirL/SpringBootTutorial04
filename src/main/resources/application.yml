@@ -1,0 +1,39 @@
+server:
+  servlet:
+    context-path: /mybatis
+
+spring:
+  profiles:
+    active:
+    - dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tutorial?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+# 用配置的方式設定mybatis如何存取
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml
+
+---
+
+spring:
+  profiles:
+  - init
+  datasource:
+    initialization-mode: always
+    schema:
+    - classpath:user.sql
+    - classpath:department.sql
+    data:
+    - classpath:user-init-data.sql
+    - classpath:department-init-data.sql
+    
+---
+
+spring:
+  profiles:
+  - dev
